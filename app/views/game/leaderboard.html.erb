@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-offset-1">
+      <table>
+        <thead>
+          Overall Summary
+        </thead>
+        <tr>
+          <td>Total Games</td>
+          <td class="text-right"><%= @user_games_all.count %></td>
+        </tr>
+        <tr>
+          <td>Total Wins</td>
+          <td class="text-right"><%= @user_games_all.where(:win => 1).count %></td>
+        </tr>
+        <tr>
+          <td>Total Losses</td>
+          <td class="text-right"><%= @user_games_all.where(:win => 0).count %></td>
+        </tr>
+        <tr>
+          <td>Win %</td>
+          <td class="text-right"><%= number_to_percentage(100*@user_games_all.where(:win => 1).count.to_f / @user_games_all.count.to_f) %></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-md-4 col-md-offset-1">
+      <h4>Top Games for <%= current_user.username %></h4>
+      <table class="table table-striped">
+        <thead>
+          <th>Number of Moves</th>
+          <th>Date</th>
+        </thead>
+
+        <% @user_leaderboard.each do |game| %>
+        <tr>
+          <td><%= game.num_moves %></td>
+          <td><%= game.created_at %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+
+  </div>
+  <div class="row">
+
+    <div class="col-md-10 col-md-offset-1">
+      <h4>Top Light-it-Up Games</h4>
+      <table class="table table-striped">
+        <thead>
+          <th>Number of Moves</th>
+          <th>Username</th>
+          <th>Date</th>
+        </thead>
+
+        <% @leaderboard.each do |game| %>
+        <tr>
+          <td><%= game.num_moves %></td>
+          <td><%= User.find_by(:id => game.user_id).username %></td>
+          <td><%= game.created_at %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
