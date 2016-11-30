@@ -17,8 +17,17 @@
     <% end %>
 
     <div class="row">
-      <a href="/quit_game/<%= @moves %>/<%= @win %>">Quit Game</a> <a href="/save_game/<%= @config %>/<%= @moves %>">Save Game</a>
+      <% if @win == 1 %>
+        <a href="/new_game" class="btn btn-success">New Game</a>
+      <% end %>
+
+      <% if @win == 0 %>
+        <a href="/save_game/<%= @config %>/<%= @moves %>" class="btn btn-warning">Save Game</a>
+      <% end %>
+      
+      <a href="/quit_game/<%= @moves %>/<%= @win %>" class="btn btn-danger">Quit Game</a>
     </div>
+    <p></p>
 
     <div class="row">
       <table>

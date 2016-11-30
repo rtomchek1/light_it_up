@@ -25,39 +25,78 @@
     </div>
 
     <div class="col-md-4 col-md-offset-1">
-      <h4>Top Games for <%= current_user.username %></h4>
+      <h4>Top 10 Games for <%= current_user.username %></h4>
       <table class="table table-striped">
         <thead>
+          <th>Game #</th>
           <th>Number of Moves</th>
           <th>Date</th>
         </thead>
 
-        <% @user_leaderboard.each do |game| %>
+        <% counter = 0 %>
+        <% @user_leaderboard[0..9].each do |game| %>
+        <% counter = counter + 1 %>
         <tr>
-          <td><%= game.num_moves %></td>
-          <td><%= game.created_at %></td>
+          <td style="text-align:center"><%= counter %></td>
+          <td style="text-align:center"><%= game.num_moves %></td>
+          <td><%= game.created_at.strftime("%B %d, %Y") %></td>
         </tr>
         <% end %>
       </table>
     </div>
 
   </div>
-  <div class="row">
 
-    <div class="col-md-10 col-md-offset-1">
-      <h4>Top Light-it-Up Games</h4>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-1">
       <table class="table table-striped">
         <thead>
+          <th>Game #</th>
+          <th>Date</th>
+          <th>Number of Moves</th>
+          <th>Result</th>
+        </thead>
+
+        <% counter = 0 %>
+        <% @user_games_all[0..5].each do |game| %>
+        <% counter = counter + 1 %>
+        <tr>
+          <td style="text-align:center"><%= counter %></td>
+          <td><%= game.created_at.localtime.strftime("%B %d, %Y %I:%M %p") %></td>
+          <td style="text-align:center"><%= game.num_moves %></td>
+          <td>
+            <% if game.win == 1 %>
+            Win
+            <% else %>
+            Lose
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-8 col-md-offset-1">
+      <h4>Top 10 Light-it-Up Games</h4>
+      <table class="table table-striped">
+        <thead>
+          <th>Game #</th>
           <th>Number of Moves</th>
           <th>Username</th>
           <th>Date</th>
         </thead>
 
-        <% @leaderboard.each do |game| %>
+        <% counter = 0 %>
+        <% @leaderboard[0..9].each do |game| %>
+        <% counter = counter + 1 %>
         <tr>
-          <td><%= game.num_moves %></td>
+          <td style="text-align:center"><%= counter %></td>
+          <td style="text-align:center"><%= game.num_moves %></td>
           <td><%= User.find_by(:id => game.user_id).username %></td>
-          <td><%= game.created_at %></td>
+          <td><%= game.created_at.strftime("%B %d, %Y") %></td>
         </tr>
         <% end %>
       </table>

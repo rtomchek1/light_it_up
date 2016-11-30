@@ -398,9 +398,9 @@ class GameController < ApplicationController
       game.num_moves = params[:moves].to_i
       game.save
     end
-    render("index")
+    redirect_to("/")
   end
-  
+
   def save_game
     # Check to see if the user already has a saved game
     if Save.find_by(:user_id => current_user.id) != nil
@@ -408,20 +408,20 @@ class GameController < ApplicationController
     else
       game = Save.new
     end
-    
+
     game.user_id = current_user.id
     game.config = params[:config]
     game.num_moves = params[:moves]
     game.save
-    
-    render("index")
+
+    redirect_to("/")
   end
-  
+
   def load_game
     config = Save.find_by(:user_id => current_user.id).config
     @moves = Save.find_by(:user_id => current_user.id).num_moves
     @win = 0
-    
+
     box_1_1 = config[0].to_i
     box_1_2 = config[1].to_i
     box_1_3 = config[2].to_i
@@ -438,7 +438,7 @@ class GameController < ApplicationController
     box_4_2 = config[13].to_i
     box_4_3 = config[14].to_i
     box_4_4 = config[15].to_i
-    
+
     @config = box_1_1.to_s + box_1_2.to_s + box_1_3.to_s + box_1_4.to_s + box_2_1.to_s + box_2_2.to_s + box_2_3.to_s + box_2_4.to_s + box_3_1.to_s + box_3_2.to_s + box_3_3.to_s + box_3_4.to_s + box_4_1.to_s + box_4_2.to_s + box_4_3.to_s + box_4_4.to_s
 
     if box_1_1 == 0
@@ -536,7 +536,7 @@ class GameController < ApplicationController
     else
       @box_4_4 = "success"
     end
-    
+
     render("game_board")
   end
 
@@ -549,6 +549,7 @@ class GameController < ApplicationController
       a.num_moves <=> b.num_moves
     end
 
-    @user_games_all = Game.where(:user_id => current_user.id)
+    @user_games_all = Game.where(:user_id => current_user.id).order('created_at DESC')
+
   end
 end

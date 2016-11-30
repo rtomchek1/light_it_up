@@ -2,35 +2,42 @@
   <div class="page-header">
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
-        <h1>Welcome, <%= current_user.username %> to Light it Up!</h1>
+        <h1>Welcome, <a href="/users/edit"><u class="text-success"><%= current_user.username %></u></a> to Light-it-Up!</h1>
       </div>
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-md-2 col-md-offset-2">
+      <a href="/new_game" class="btn btn-success">Play Light-it-Up!</a>
+    </div>
+
+    <% if Save.find_by(:user_id => current_user.id) != nil %>
+    <div class="col-md-2">
+      <a href="/load_game" class="btn btn-warning">Load a saved game!</a>
+    </div>
+    <% end %>
+
+    <div class="col-md-2">
+      <a href="/leaderboard" class="btn btn-info">View Leaderboard!</a>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <h2>Instructions</h2>
-      <p>instruction text</p>
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <a href="/new_game">Click to play!</a>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <a href="/load_game">Load a saved game!</a>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <a href="/leaderboard">View Leaderboard</a>
+      <p>
+        At the start of the game, the player will receive a 4x4 game board where each of the 16 squares is 1 of 2 randomly selected colors.
+      </p>
+      <img src="/images/5.png" width="100px" height="100px">
+      <p>
+        Clicking a square will flip the color of the clicked square and all other bordering squares, without wrapping (e.g. clicking the top-left square does not change the color of the bottom-right square)
+      </p>
+      <img src="/images/7.png" width="100px" height="100px">  <span class="glyphicon glyphicon-arrow-right"></span>  <img src="/images/8.png" width="100px" height="100px">
+      <p>
+        The objective of the game is to return the game board to a solid color, either on (green) or off (gray)
+      </p>
+      <img src="/images/4.png" width="100px" height="100px" style="float:left"> <h4 style="float:left"> OR </h4> <img src="/images/3.png" width="100px" height="100px" style="float:left">
     </div>
   </div>
 </div>
