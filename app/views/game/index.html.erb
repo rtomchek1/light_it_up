@@ -12,7 +12,7 @@
       <a href="/new_game" class="btn btn-success">Play Light-it-Up!</a>
     </div>
 
-    <% if Save.find_by(:user_id => current_user.id) != nil %>
+    <% if current_user.save_game != nil %>
     <div class="col-md-2">
       <a href="/load_game" class="btn btn-warning">Load a saved game!</a>
     </div>
@@ -27,15 +27,17 @@
     <div class="col-md-8 col-md-offset-2">
       <h2>Instructions</h2>
       <p>
-        At the start of the game, the player will receive a 4x4 game board where each of the 16 squares is 1 of 2 randomly selected colors.
+        At the start of the game, you will receive a 4x4 game board where each of the 16 squares is 1 of 2 randomly selected colors: Green (On) or Gray (Off)
       </p>
       <img src="/images/5.png" width="100px" height="100px">
+      <p></p>
       <p>
         Clicking a square will flip the color of the clicked square and all other bordering squares, without wrapping (e.g. clicking the top-left square does not change the color of the bottom-right square)
       </p>
       <img src="/images/7.png" width="100px" height="100px">  <span class="glyphicon glyphicon-arrow-right"></span>  <img src="/images/8.png" width="100px" height="100px">
+      <p></p>
       <p>
-        The objective of the game is to return the game board to a solid color, either on (green) or off (gray)
+        The objective of the game is to return the game board to a solid color
       </p>
       <img src="/images/4.png" width="100px" height="100px" style="float:left"> <h4 style="float:left"> OR </h4> <img src="/images/3.png" width="100px" height="100px" style="float:left">
     </div>

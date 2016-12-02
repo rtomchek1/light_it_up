@@ -403,8 +403,8 @@ class GameController < ApplicationController
 
   def save_game
     # Check to see if the user already has a saved game
-    if Save.find_by(:user_id => current_user.id) != nil
-      game = Save.find_by(:user_id => current_user.id)
+    if current_user.save_game != nil
+      game = current_user.save_game
     else
       game = Save.new
     end
@@ -418,8 +418,8 @@ class GameController < ApplicationController
   end
 
   def load_game
-    config = Save.find_by(:user_id => current_user.id).config
-    @moves = Save.find_by(:user_id => current_user.id).num_moves
+    config = current_user.save_game.config
+    @moves = current_user.save_game.num_moves
     @win = 0
 
     box_1_1 = config[0].to_i
@@ -541,15 +541,15 @@ class GameController < ApplicationController
   end
 
   def leaderboard
-    @leaderboard = Game.where(:win => 1).sort do |a,b|
+    @leaderboard = Game.winning_games.sort do |a,b|
       a.num_moves <=> b.num_moves
     end
 
-    @user_leaderboard = Game.where(:win => 1, :user_id => current_user.id).sort do |a,b|
+    @user_leaderboard = current_user.games_won.sort do |a,b|
       a.num_moves <=> b.num_moves
     end
 
-    @user_games_all = Game.where(:user_id => current_user.id).order('created_at DESC')
+    @user_games_all = current_user.games.order('created_at DESC')
 
   end
 end

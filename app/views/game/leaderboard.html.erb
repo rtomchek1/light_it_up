@@ -11,15 +11,15 @@
         </tr>
         <tr>
           <td>Total Wins</td>
-          <td class="text-right"><%= @user_games_all.where(:win => 1).count %></td>
+          <td class="text-right"><%= @user_games_all.winning_games.count %></td>
         </tr>
         <tr>
           <td>Total Losses</td>
-          <td class="text-right"><%= @user_games_all.where(:win => 0).count %></td>
+          <td class="text-right"><%= @user_games_all.losing_games.count %></td>
         </tr>
         <tr>
           <td>Win %</td>
-          <td class="text-right"><%= number_to_percentage(100*@user_games_all.where(:win => 1).count.to_f / @user_games_all.count.to_f) %></td>
+          <td class="text-right"><%= number_to_percentage(100*@user_games_all.winning_games.count.to_f / @user_games_all.count.to_f) %></td>
         </tr>
       </table>
     </div>
@@ -95,7 +95,7 @@
         <tr>
           <td style="text-align:center"><%= counter %></td>
           <td style="text-align:center"><%= game.num_moves %></td>
-          <td><%= User.find_by(:id => game.user_id).username %></td>
+          <td><%= game.user.username %></td>
           <td><%= game.created_at.strftime("%B %d, %Y") %></td>
         </tr>
         <% end %>
