@@ -1,7 +1,5 @@
+<!-- Use to change the size of each clickable square -->
 <% style = "width: 238px; height: 150px;" %>
-
-<!-- Remove after testing
-<h1><%= @config %></h1> -->
 
 <div class="container">
   <div class="col-md-10 col-md-offset-1">
@@ -24,7 +22,7 @@
       <% if @win == 0 %>
         <a href="/save_game/<%= @config %>/<%= @moves %>" class="btn btn-warning">Save Game</a>
       <% end %>
-      
+
       <a href="/quit_game/<%= @moves %>/<%= @win %>" class="btn btn-danger">Quit Game</a>
     </div>
     <p></p>

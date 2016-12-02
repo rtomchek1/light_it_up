@@ -552,4 +552,10 @@ class GameController < ApplicationController
     @user_games_all = current_user.games.order('created_at DESC')
 
   end
+
+  def show
+    @user_games_all = current_user.games.order('created_at DESC')
+
+    render("show")
+  end
 end

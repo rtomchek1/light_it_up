@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   get("/load_game", {:controller => "game", :action => "load_game"})
   get("/:config/:row/:col/:moves", {:controller => "game", :action => "move"})
   get("/quit_game/:moves/:win", {:controller => "game", :action => "quit_game"})
+  get("/games/show/:id", {:controller => "game", :action => "show"})
 
 end

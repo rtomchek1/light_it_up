@@ -1,36 +1,38 @@
-<div class="container">
+<div class="container-fluid">
+
+    <div class="page-header text-center">
+      <h1>Light-it-Up Leaderboard for <%= current_user.username %></h1>
+      <a href="/" class="btn btn-success">Back to Home</a>
+    </div>
+
   <div class="row">
-    <div class="col-md-4 col-md-offset-1">
-      <table>
+    <div class="col-md-10 col-md-offset-1">
+      <table class="table table-striped">
+        <caption style="text-align:left"><h4>Overall Summary <small>(<a href="/games/show/<%= current_user.id %>">View Details</a>)</small></h4></caption>
         <thead>
-          Overall Summary
+          <th class="text-center">Total Games Played</th>
+          <th class="text-center">Total Games Won</th>
+          <th class="text-center">Total Games Lost</th>
+          <th class="text-center">Win %</th>
         </thead>
         <tr>
-          <td>Total Games</td>
-          <td class="text-right"><%= @user_games_all.count %></td>
-        </tr>
-        <tr>
-          <td>Total Wins</td>
-          <td class="text-right"><%= @user_games_all.winning_games.count %></td>
-        </tr>
-        <tr>
-          <td>Total Losses</td>
-          <td class="text-right"><%= @user_games_all.losing_games.count %></td>
-        </tr>
-        <tr>
-          <td>Win %</td>
-          <td class="text-right"><%= number_to_percentage(100*@user_games_all.winning_games.count.to_f / @user_games_all.count.to_f) %></td>
+          <td class="text-center"><%= @user_games_all.count %></td>
+          <td class="text-center"><%= @user_games_all.winning_games.count %></td>
+          <td class="text-center"><%= @user_games_all.losing_games.count %></td>
+          <td class="text-center"><%= number_to_percentage(100*@user_games_all.winning_games.count.to_f / @user_games_all.count.to_f) %></td>
         </tr>
       </table>
     </div>
+  </div>
 
+  <div class="row">
     <div class="col-md-4 col-md-offset-1">
-      <h4>Top 10 Games for <%= current_user.username %></h4>
       <table class="table table-striped">
+        <caption style="text-align:left"><h4>Top 10 Games Won</h4></caption>
         <thead>
-          <th>Game #</th>
-          <th>Number of Moves</th>
-          <th>Date</th>
+          <th style="text-align:center">Game #</th>
+          <th style="text-align:center">Date</th>
+          <th style="text-align:center">Number of Moves</th>
         </thead>
 
         <% counter = 0 %>
@@ -38,33 +40,34 @@
         <% counter = counter + 1 %>
         <tr>
           <td style="text-align:center"><%= counter %></td>
+          <td style="text-align:center"><%= game.created_at.strftime("%B %d, %Y") %></td>
           <td style="text-align:center"><%= game.num_moves %></td>
-          <td><%= game.created_at.strftime("%B %d, %Y") %></td>
         </tr>
         <% end %>
       </table>
     </div>
 
-  </div>
 
-  <div class="row">
-    <div class="col-md-6 col-md-offset-1">
+
+
+    <div class="col-md-4 col-md-offset-2">
       <table class="table table-striped">
+        <caption style="text-align:left"><h4>Recent Games</h4></caption>
         <thead>
-          <th>Game #</th>
-          <th>Date</th>
-          <th>Number of Moves</th>
-          <th>Result</th>
+          <th style="text-align:center">Game #</th>
+          <th style="text-align:center">Date</th>
+          <th style="text-align:center">Number of Moves</th>
+          <th style="text-align:center">Result</th>
         </thead>
 
         <% counter = 0 %>
-        <% @user_games_all[0..5].each do |game| %>
+        <% @user_games_all[0..9].each do |game| %>
         <% counter = counter + 1 %>
         <tr>
           <td style="text-align:center"><%= counter %></td>
-          <td><%= game.created_at.localtime.strftime("%B %d, %Y %I:%M %p") %></td>
+          <td style="text-align:center"><%= game.created_at.localtime.strftime("%B %d, %Y %I:%M %p") %></td>
           <td style="text-align:center"><%= game.num_moves %></td>
-          <td>
+          <td style="text-align:center">
             <% if game.win == 1 %>
             Win
             <% else %>
@@ -79,14 +82,14 @@
 
   <div class="row">
 
-    <div class="col-md-8 col-md-offset-1">
-      <h4>Top 10 Light-it-Up Games</h4>
+    <div class="col-md-10 col-md-offset-1">
+      <h4>Top 10 All-Time Light-it-Up Games</h4>
       <table class="table table-striped">
         <thead>
-          <th>Game #</th>
-          <th>Number of Moves</th>
-          <th>Username</th>
-          <th>Date</th>
+          <th style="text-align:center">Game #</th>
+          <th style="text-align:center">Player</th>
+          <th style="text-align:center">Date</th>
+          <th style="text-align:center">Number of Moves</th>
         </thead>
 
         <% counter = 0 %>
@@ -94,9 +97,9 @@
         <% counter = counter + 1 %>
         <tr>
           <td style="text-align:center"><%= counter %></td>
+          <td style="text-align:center"><%= game.user.username %></td>
+          <td style="text-align:center"><%= game.created_at.strftime("%B %d, %Y") %></td>
           <td style="text-align:center"><%= game.num_moves %></td>
-          <td><%= game.user.username %></td>
-          <td><%= game.created_at.strftime("%B %d, %Y") %></td>
         </tr>
         <% end %>
       </table>
